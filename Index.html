@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chúc Mừng 8/3 - Phép Màu</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #ffecd2);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display: flex; align-items: center; justify-content: center;
+  }
+  @keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  #password-screen {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    width: 300px; border-radius: 25px; padding: 40px 20px;
+    color: #d81b60; text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.4);
+    z-index: 100;
+  }
+  #password-screen input {
+    width: 80%; padding: 12px; margin: 20px 0;
+    border-radius: 50px; border: 1px solid #ff9a9e; outline: none;
+    text-align: center; font-weight: bold; color: #d81b60;
+  }
+  #password-screen button {
+    padding: 12px 35px; background: #ff4081; border: none;
+    border-radius: 50px; color: white; font-weight: bold;
+    cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+  }
+
+  #effect-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; }
+  
+  #letter {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; max-width: 400px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 30px; padding: 30px; text-align: center;
+    font-family: 'Georgia', serif; font-size: 1.1rem; line-height: 1.6;
+    opacity: 0; animation: magicAppear 2s ease-out forwards 3s;
+    z-index: 50; border: 2px solid #fff;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+  @keyframes magicAppear {
+    from { opacity: 0; transform: translate(-50%, -40%) scale(0.9); filter: blur(10px); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
+  }
+
+  .flower { position: absolute; width: 120px; opacity: 0; border-radius: 15px; }
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(100vh) rotate(0deg); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-110vh) rotate(360deg); }
+  }
+  #f1 { left: 10%; animation: floatUp 8s linear forwards 0s; }
+  #f2 { left: 35%; animation: floatUp 9s linear forwards 1s; }
+  #f3 { left: 65%; animation: floatUp 7s linear forwards 0.5s; }
+  #f4 { left: 85%; animation: floatUp 10s linear forwards 1.5s; }
+
+  #audio-control {
+    position: fixed; top: 20px; right: 20px;
+    font-size: 30px; cursor: pointer; z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div id="password-screen">
+  <h2>💖 8 THÁNG 3 💖</h2>
+  <input type="password" id="password-input" placeholder="Nhập mật khẩu..." />
+  <br>
+  <button id="submit-btn">MỞ QUÀ ✨</button>
+  <div id="password-error" style="margin-top: 15px; color: #ff4081; font-size: 14px;"></div>
+</div>
+
+<div id="effect-screen">
+  <img class="flower" id="f1" src="https://i.postimg.cc/cCpGyc8Z/Messenger-creation-0B08022C-3D30-4118-865C-1960C5C9ECE7.jpg" />
+  <img class="flower" id="f2" src="https://i.postimg.cc/GtWnwjsw/Messenger_creation_466421CC_878F_41F3_939A_7B652FB58673.jpg" />
+  <img class="flower" id="f3" src="https://i.postimg.cc/yxMC4TSH/Messenger_creation_BAC46BD1_5F76_4B53_9B5C_01DB424F3873.jpg" />
+  <img class="flower" id="f4" src="https://i.postimg.cc/L5cFKVZS/Messenger_creation_D4EA7F37_50F3_4996_9833_230D1B9D4492.jpg" />
+
+  <div id="letter">
+    <p style="font-size: 2.5rem; margin: 0;">💌</p>
+    Chúc em ngày 8/3 thật hạnh phúc và xinh đẹp. <br><br>
+    Cảm ơn em đã luôn ở bên cạnh anh! <br><br>
+    <strong style="color: #ff4081;">Yêu em rất nhiều!</strong>
+  </div>
+
+  <div id="audio-control">🎵</div>
+  
+  <audio id="audio" loop preload="auto">
+    <source src="https://docs.google.com/uc?export=download&id=1-Sa4UARRAjWNparqbGHknGi-2FAZIrgC" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+  const correctPassword = "103103";
+  const passInp = document.getElementById("password-input");
+  const btn = document.getElementById("submit-btn");
+  const audio = document.getElementById("audio");
+
+  // Quan trọng: Phải đảm bảo file Drive đã ở chế độ "Bất kỳ ai cũng xem được"
+  btn.addEventListener("click", () => {
+    if (passInp.value === correctPassword) {
+      document.getElementById("password-screen").style.display = "none";
+      document.getElementById("effect-screen").style.display = "block";
+      
+      // Thử phát nhạc nhiều lần để vượt qua rào cản trình duyệt
+      audio.volume = 1.0;
+      audio.play().catch(error => {
+        console.log("Phát nhạc thất bại, đang thử lại...");
+        // Nếu lỗi, tạo một tương tác ảo để phát
+        document.body.addEventListener('click', () => {
+            audio.play();
+        }, { once: true });
+      });
+    } else {
+      document.getElementById("password-error").textContent = "Sai mật khẩu rồi!";
+    }
+  });
+
+  passInp.addEventListener("keypress", (e) => { if (e.key === "Enter") btn.click(); });
+
+  let playing = true;
+  document.getElementById("audio-control").addEventListener("click", () => {
+    if (playing) { audio.pause(); } else { audio.play(); }
+    playing = !playing;
+  });
+</script>
+
+</body>
+</html>
